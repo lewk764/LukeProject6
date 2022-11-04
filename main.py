@@ -40,17 +40,131 @@ def getNumberGradeFromUser():
   ################ My Function Definitions ################
 
 #Adds a specified student to the dictionary
-def addStudent(studentName, dictionary):
-
+def addStudent(dictionary):
+  
+  print()
+  #Prompt for a student to add
+  studentName = input("Enter student name: ")
+  
   #Add the given student name to the dictionary; overwrites existing students of same name!
   #Key == studentName | Value == empty list
-  dictionary[studentName] = ()
-  
+  dictionary[studentName] = []
+
+  #Confirm that the student has been added
   print(f"{studentName} added!")
 
+#Removes a specified student from the dictionary
+def removeStudent(dictionary):
+  print()
+  
+  #Prompt for student to remove
+  studentName = input("Enter name of student to remove: ")
 
-  ################ Main Program ################
+  #if student is in the dict, remove them
+  if studentName in dictionary:
+    dictionary.pop(studentName)
+    print(f"{studentName} removed!")
+  #If student isn't in dict, tell the user
+  else:
+    print(f"{studentName} is not in the list of students!")
 
+#Adds a quiz grade to the student in the dictionary
+def addQuiz(dictionary):
+  print()
+
+  #Prompt for a student to add a grade for
+  studentName = input("Enter name of student: ")
+
+  #If student is in the list, proceede with adding a grade
+  if studentName in dictionary:
+    #Prompt for a grade
+    grade = getNumberGradeFromUser()
+    #Add grade to the list value of the specified student in the dictionary
+    dictionary[studentName].append(grade)
+    print(f"Added {grade} to {studentName}'s quizzes")
+
+  #If student doesn't exist, tell user
+  else:
+    print(f"{studentName} is not in the list of students!")
+
+#Lists the quiz grades for the specified student
+def listQuiz(dictionary):
+  print()
+
+  #Prompt for a student to list the quiz grades of
+  studentName = input("Enter name of student: ")
+
+  #If student is in the list, proceede
+  if studentName in dictionary:
+    print()
+    print(f"{studentName}'s Quiz Grades:")
+    for grade in dictionary[studentName]:
+      print(grade)
+      
+  #If student doesn't exist, tell user
+  else:
+    print(f"{studentName} is not in the list of students!")
+
+#Calculate the letter grade based on student's quiz scores
+def calcLetterGrade(dictionary):
+  print()
+
+  #Prompt for a student
+  studentName = input("Enter name of student: ")
+
+  #If student is in the list, proceede
+  if studentName in dictionary:
+    print()
+
+    #Calculate average of student's grades
+    sumOfGrades = 0
+    numOfGrades = 0
+    for grade in dictionary[studentName]:
+      sumOfGrades += grade
+      numOfGrades += 1
+    
+    averageGrade = sumOfGrades / numOfGrades
+
+    #Determine letter grade based on average
+    if averageGrade >= 90:
+      letterGrade = "A"
+
+    elif averageGrade >= 80:
+      letterGrade = "B"
+
+    elif averageGrade >= 70:
+      letterGrade = "C"
+
+    elif averageGrade >= 60:
+      letterGrade = "D"
+
+    elif averageGrade >= 50:
+      letterGrade = "E"
+
+    elif averageGrade < 50:
+      letterGrade = "F"
+
+    #Print studen't letter grade
+    print(f"{studentName}'s current grade is a {letterGrade}")
+    
+      
+  #If student doesn't exist, tell user
+  else:
+    print(f"{studentName} is not in the list of students!")
+
+
+
+################ Main Program ################
+
+#Program Icon
+print("""
+   ____               _        ____              _    
+  / ___|_ __ __ _  __| | ___  | __ )  ___   ___ | | __
+ | |  _| '__/ _` |/ _` |/ _ \ |  _ \ / _ \ / _ \| |/ /
+ | |_| | | | (_| | (_| |  __/ | |_) | (_) | (_) |   < 
+  \____|_|  \__,_|\__,_|\___| |____/ \___/ \___/|_|\_\
+                                                      
+""")
 # Default variables / other info
 
 menuOption = ""
@@ -66,29 +180,31 @@ while(menuOption != "6"):
 
   #Option 1: Add a student
   if menuOption == "1":
-    studentName = input("Enter student name: ")
-    addStudent(studentName, studentDict)
+    addStudent(studentDict)
 
   #Option 2: Remove a student
   elif menuOption == "2":
-    print("test2")
+    removeStudent(studentDict)
 
   #Option 3: Add a quiz grade for a student
   elif menuOption == "3":
-    print("test3")
+    addQuiz(studentDict)
 
   #Option 4: List a student's quiz grades
   elif menuOption == "4":
-    print("test4")
+    listQuiz(studentDict)
 
   #Option 5: Get student's letter grade
   elif menuOption == "5":
-    print("test5")
+    calcLetterGrade(studentDict)
 
 #End of application loop (exiting)
 print("Program ended.")
-
-
-### Testing Zone ###
-for key, value in studentDict.items():
-  print(f"{key} / {value}")
+print("""
+   ____                 _ _                _ 
+  / ___| ___   ___   __| | |__  _   _  ___| |
+ | |  _ / _ \ / _ \ / _` | '_ \| | | |/ _ \ |
+ | |_| | (_) | (_) | (_| | |_) | |_| |  __/_|
+  \____|\___/ \___/ \__,_|_.__/ \__, |\___(_)
+                                |___/       
+""")
